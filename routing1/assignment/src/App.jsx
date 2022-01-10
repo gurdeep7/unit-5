@@ -24,6 +24,7 @@ function App() {
         <Route path={"/product/:id"} element={<Product />}/>
         <Route path= {"/products"} element= {<Products />}/>
         <Route path= {"/users/:userid"} element= {<UserDetails />}/>
+        <Route path={"*"} element={<h1>Page not found</h1>}/>
       </Routes>
       
     </div>
