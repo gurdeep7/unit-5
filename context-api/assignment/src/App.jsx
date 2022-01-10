@@ -6,18 +6,12 @@ import { Body } from './components/Body';
 
 
 function App() {
-  try{
-    console.log(Body)
-  }catch(e){
-    console.log(e, "error")
-  }
+ 
   return (
     <div className="App">
       <Navbar>
       </Navbar> 
-      <ErrorBoundary>
-
-      </ErrorBoundary>
+    <Body />
      
     </div>
   );

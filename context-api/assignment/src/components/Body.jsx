@@ -1,30 +1,68 @@
 import { useContext, useState } from "react"
 import { AuthContext } from "../contexts/AuthContextProvider"
+import { Form } from "../styles"
 
 
-export const Body = ()=>{
-
-    const auth = useContext(AuthContext)
+export const Body = ({getData})=>{
 
     const [form, setForm] = useState({})
 
-    const onChangeer = (e)=>{
-        const [name,value] = e.target
-        setForm({
+
+    const {toggleAuth} = useContext(AuthContext)
+    const onChange = (e)=>{
+        const {name,value} = e.target
+        console.log(e.target.name, e.target.value,"RTGEFRDWEAS")
+        setForm({ 
             ...form,
             [name]:value
         })
     }
 
-    const login = ()=>{
-console.log(form)
+    const handleSubmit = (data)=>{
+        data.preventDefault()
+        let body = {
+            email:form.email,
+            password:form.password
+
+        }
+        console.log(body)
+fetch(`https://reqres.in/api/login`,{
+    method:"POST",
+    headers:{
+        "Content-Type":"application/json"
+    },
+    body:JSON.stringify(body),
+
+})
+.then(response => response.text())
+  .then(result => logincheck(result))
+  .catch(error => console.log('error', error));
     }
 
-    return <div>
-        <input type="email" onChange={onChangeer} name="email"/>
+    function logincheck(token) {
 
-        <input type="password" onChange={onChangeer} name="password"/>
-        <input type="button" onClick={login}>Login</input>
+        setTimeout(() => {
+            console.log(token.error)
+        if(token !== undefined){
+            toggleAuth()
+        }else{
+            alert("wrong Login data")
+        }
+        }, 500);
+        
+        
+    }
 
-    </div>
+    const logout = ()=>{
+        toggleAuth()
+    }
+
+    return <Form onSubmit={handleSubmit}>
+        <input type="email" onChange={onChange} placeholder="Email" name="email"/>
+        <br/>
+        <input type="password" onChange={onChange} placeholder="Password" name="password"/>
+        <br/>
+        <input type="submit" value="login" onSubmit={handleSubmit}/>
+<button onClick={logout}>Logout</button>
+    </Form>
 }
