@@ -6,6 +6,8 @@ import { About } from './components/About';
 import { Navbar } from './components/Navbar';
 import { Contact } from './components/Contact';
 import { Product } from './components/Product';
+import { Users } from './components/Users';
+import { UserDetails } from './components/UserDetails';
 function App() {
   return (
     <div className="App">
@@ -20,6 +22,8 @@ function App() {
         <Route path={"/contact"} element= {<Contact />} />
         <Route path={"/contact"} element= {<Contact />} />
         <Route path={"/product/:id"} element={<Product />}/>
+        <Route path= {"/users"} element= {<Users />}/>
+        <Route path= {"/users/:userid"} element= {<UserDetails />}/>
       </Routes>
       
     </div>
