@@ -1,7 +1,7 @@
 const action = {type:"", payload:""} //Fixed , Payload optional
 
 class Store{
-    contructor(reducer, init){
+    constructor(reducer, init){
         this.reducer = reducer;
         this.state = init;
     }
@@ -16,7 +16,7 @@ const reducer = (store, action) =>{
     return store
 }
 
-const init = {count : 0};
+const init = {count : 10};
 
 const store = new Store(reducer,init)
 
