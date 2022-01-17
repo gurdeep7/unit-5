@@ -1,16 +1,24 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {addTodoError, addTodoSuccess } from "../store/action";
+import { addTodoError, addTodoSuccess } from "../store/action";
 
 export const Todos = () => {
   const [text, setText] = useState("");
-  const {loading,todos,error }= useSelector((state) =>({ 
-      todos:state.todos,
-      loading:state.loading,
-      error:state.error
-    }));
+  const { loading, todos, error } = useSelector(
+    (state) => ({
+      todos: state.todosState.todos,
+      loading: state.todosState.loading,
+      error: state.todosState.error,
+    }),
+    function (prev, curr) {
+      if (prev.loading === curr.loading && prev.error === curr.error) {
+        return true;
+      }
+      return false;
+    }
+  );
   const dispatch = useDispatch();
-  
+
   return (
     <div>
       <input
@@ -25,21 +33,24 @@ export const Todos = () => {
           fetch("http://localhost:3001/todo", {
             method: "POST",
             body: JSON.stringify({ status: false, title: text }),
-            headers:{"content-type":"application/json"}
+            headers: { "content-type": "application/json" },
           })
-            .then(d => d.json()).then((res)=>{
-                dispatch(addTodoSuccess(res))
+            .then((d) => d.json())
+            .then((res) => {
+              dispatch(addTodoSuccess(res));
             })
-            .catch((err)=>{
-                dispatch(addTodoError())
+            .catch((err) => {
+              dispatch(addTodoError());
             });
         }}
       >
         Add Todo
       </button>
       {todos.map((e) => (
-          
-        <div>{console.log(e)}{e.title}- {e.status? "DONE":"not done"}</div>
+        <div>
+          {console.log(e)}
+          {e.title}- {e.status ? "Done" : "not done"}
+        </div>
       ))}
     </div>
   );

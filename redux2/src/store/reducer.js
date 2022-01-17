@@ -1,6 +1,6 @@
 import { ADD_TODO, ADD_TODO_LOADING, ADD_TODO_SUCCESS } from "./actionTypes";
 
-const init = {counter:10, todos:[]}
+const init = {todos:[]}
 
 export const reducer = ( state = init, { type, payload,loading }) => {
   console.log(state.todos,payload)
